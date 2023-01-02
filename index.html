@@ -8,9 +8,30 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div id="container">
-    <div id="grid"></div>
-</div>
+    <div id="heading">
+        <h1>Etch-a-Sketch</h1>
+      </div>
+      <div id="settings">
+        <button id="setting-1">16 x 16</button>
+        <button id="setting-2">32 x 32</button>
+        <button id="setting-3">64 x 64</button>
+        <button id="setting-4">128 x 128</button>
+      </div>
+
+      <div id="container">
+        <div id="grid"></div>
+      </div>
+      
+<!-- Sliding scale starting off in the middle, at 500 squares, zoom to 1 square, zoom out to 1000 squares
+zoom is centered, but scrollbars appear on edges to help user navigate-->
+
+<div><!-- Color Brush with color wheel next to it, default black --></div>
+<div><!-- Eraser button --></div>
+<div><!-- Rainbow button --></div>
+<div><!-- Greyscale button --></div>
+<div><!-- Clear button --></div>
+<div><!-- Save button (only saves current zoom amount) --></div>
+<div><!-- Save options: save with white background, save with transparent background--></div>
 
 </body>
 <script src="script.js"></script>
