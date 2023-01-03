@@ -1,6 +1,16 @@
 const container = document.getElementById('container');
 const grid = document.getElementById('grid');
 
+
+
+let selectedColor = '#000000';
+let colorPicker = document.getElementById('color-picker');
+
+colorPicker.addEventListener('change', function(event) {
+  selectedColor = event.target.value;
+}); 
+
+
 function createGrid(rows = 16, columns = 16) {
   // Clear existing grid squares
   grid.innerHTML = '';
@@ -14,14 +24,17 @@ function createGrid(rows = 16, columns = 16) {
       const div = document.createElement('div');
       div.style.width = `${squareSize}px`;
       div.style.height = `${squareSize}px`;
+      
 
       div.addEventListener('mousedown', function(event) {
-        event.target.style.backgroundColor = 'black';
+        selectedColor = colorPicker.value;
+        event.target.style.backgroundColor = selectedColor;
       });
       
       div.addEventListener('mousemove', function(event) {
         if (event.buttons === 1) {
-          event.target.style.backgroundColor = 'black';
+          selectedColor = colorPicker.value;
+          event.target.style.backgroundColor = selectedColor;
         }
       });
       grid.appendChild(div);
@@ -82,4 +95,3 @@ document.getElementById('setting-4').addEventListener('click', function() {
 
 
 updateGridSize('setting-1');
-
