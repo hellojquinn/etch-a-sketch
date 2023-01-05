@@ -17,3 +17,7 @@
 #heading {
   text-align: center;
 }
+
+.selected {
+  background-color: #ccc;
+}

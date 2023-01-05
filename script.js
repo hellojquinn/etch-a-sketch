@@ -1,47 +1,130 @@
 const container = document.getElementById('container');
 const grid = document.getElementById('grid');
 
+let currentTool = 'draw';
+
+const drawButton = document.querySelector('.tool-button[data-tool="draw"]');
+const eraseButton = document.querySelector('.tool-button[data-tool="erase"]');
+
+const colorDropperButton = document.querySelector('.tool-button[data-tool="color-dropper"]');
+
+
+
+drawButton.addEventListener('click', function() {
+  currentTool = 'draw';
+});
+
+eraseButton.addEventListener('click', function() {
+  currentTool = 'erase';
+});
 
 
 let selectedColor = '#000000';
+
 let colorPicker = document.getElementById('color-picker');
 
+
+//buttons
+
 colorPicker.addEventListener('change', function(event) {
-  selectedColor = event.target.value;
-}); 
+  selectedColor = colorPicker.value;  
+});
+
+drawButton.addEventListener('click', function() {
+  currentTool = 'draw';
+  drawButton.classList.add('selected');
+  eraseButton.classList.remove('selected');
+  colorDropperButton.classList.remove('selected');
+});
+
+eraseButton.addEventListener('click', function() {
+  currentTool = 'erase';
+  eraseButton.classList.add('selected');
+  drawButton.classList.remove('selected');
+  colorDropperButton.classList.remove('selected');
+});
+
+colorDropperButton.addEventListener('click', function() {
+  currentTool = 'color-dropper';
+  eraseButton.classList.remove('selected');
+  drawButton.classList.remove('selected');
+  colorDropperButton.classList.add('selected');
+});
+
+
+grid.addEventListener('mousedown', function(event) {
+  if (event.target.matches('div')) {
+    if (currentTool === 'draw') {
+      selectedColor = colorPicker.value;
+      event.target.style.backgroundColor = selectedColor;
+    } else if (currentTool === 'erase') {
+      event.target.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+    }
+  }
+});
+
+grid.addEventListener('mousemove', function(event) {
+  if (event.buttons === 1) {
+    if (event.target.matches('div')) {
+      if (currentTool === 'draw') {
+        event.target.style.backgroundColor = selectedColor;
+      } else if (currentTool === 'erase') {
+        event.target.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+      } 
+    }
+  }
+});
+
+grid.addEventListener('mouseover', function(event) {
+  if (currentTool === 'color-dropper') {
+    if (event.target.matches('div')) {
+      const backgroundColor = event.target.style.backgroundColor;
+      if (backgroundColor) {
+        const hexColor = rgbToHex(backgroundColor);
+        colorPicker.value = hexColor;
+      }
+    }
+  }
+});
+
+function rgbToHex(rgb) {
+  
+  const r = parseInt(rgb.match(/\d+/g)[0], 10);
+  const g = parseInt(rgb.match(/\d+/g)[1], 10);
+  const b = parseInt(rgb.match(/\d+/g)[2], 10);
+
+  
+  const hexR = r.toString(16).padStart(2, '0');
+  const hexG = g.toString(16).padStart(2, '0');
+  const hexB = b.toString(16).padStart(2, '0');
+
+  
+  return `#${hexR}${hexG}${hexB}`;
+}
+
+
+
+
 
 
 function createGrid(rows = 16, columns = 16) {
-  // Clear existing grid squares
+  
   grid.innerHTML = '';
 
-  const containerWidth = container.offsetWidth;
-  const squareSize = containerWidth / columns;
+  const squareSize = container.offsetWidth / columns;
 
-  // Generate new grid squares
+  
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < columns; col++) {
       const div = document.createElement('div');
       div.style.width = `${squareSize}px`;
       div.style.height = `${squareSize}px`;
-      
 
-      div.addEventListener('mousedown', function(event) {
-        selectedColor = colorPicker.value;
-        event.target.style.backgroundColor = selectedColor;
-      });
-      
-      div.addEventListener('mousemove', function(event) {
-        if (event.buttons === 1) {
-          selectedColor = colorPicker.value;
-          event.target.style.backgroundColor = selectedColor;
-        }
-      });
       grid.appendChild(div);
     }
   }
 
-  // Update grid dimensions
+  
   grid.style.gridTemplateColumns = `repeat(${columns}, ${squareSize}px)`;
   grid.style.gridTemplateRows = `repeat(${rows}, ${squareSize}px)`;
   grid.style.width = `${columns * squareSize}px`;
@@ -49,9 +132,17 @@ function createGrid(rows = 16, columns = 16) {
 }
 
 
+
 let currentSetting;
 
 function updateGridSize(setting) {
+
+  currentTool = 'draw';
+  drawButton.classList.add('selected');
+  eraseButton.classList.remove('selected');
+  colorDropperButton.classList.remove('selected');
+
+
   switch (setting) {
     case 'setting-1':
       currentSetting = { rows: 16, cols: 16 };
@@ -73,6 +164,10 @@ function updateGridSize(setting) {
 }
 
 document.getElementById('clear').addEventListener('click', function() {
+  currentTool = 'draw';
+  drawButton.classList.add('selected');
+  eraseButton.classList.remove('selected');
+  colorDropperButton.classList.remove('selected');
   createGrid(currentSetting.rows, currentSetting.cols);
 });
 
@@ -95,3 +190,75 @@ document.getElementById('setting-4').addEventListener('click', function() {
 
 
 updateGridSize('setting-1');
+
+const backgroundRadioButtons = document.querySelectorAll('input[name="background"]');
+
+let selectedBackground = 'white';
+
+backgroundRadioButtons.forEach(function(radioButton) {
+  radioButton.addEventListener('change', function(event) {
+    selectedBackground = event.target.value;
+  });
+});
+
+
+function saveImage(transparentBackground) {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  
+  canvas.width = grid.clientWidth;
+  canvas.height = grid.clientHeight;
+
+  
+  if (transparentBackground) {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0)';
+  } else {
+    ctx.fillStyle = '#ffffff';
+  }
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  
+  Array.from(grid.children).forEach(square => {
+    const x = square.offsetLeft;
+    const y = square.offsetTop;
+    const width = square.offsetWidth;
+    const height = square.offsetHeight;
+    const color = square.style.backgroundColor;
+
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, width, height);
+  });
+
+  
+  const dataURL = canvas.toDataURL();
+
+  
+  const a = document.createElement('a');
+  a.download = 'image.png';
+  a.href = dataURL;
+  a.click();
+}
+
+
+
+
+document.getElementById('save-button').addEventListener('click', function() {
+  const radioValue = document.querySelector('input[name="background"]:checked').value;
+  const backgroundColor = radioValue === 'white' ? '#ffffff' : 'rgba(0, 0, 0, 0)';
+
+  html2canvas(grid, {
+    backgroundColor: backgroundColor,
+  }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'my-image.png';
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+});
+
+
+
+
+drawButton.classList.add('selected');
+
