@@ -1,3 +1,7 @@
+body {
+  background-color: #efefef;
+}
+
 #container {
   position: absolute;
   top: 50%;
@@ -20,4 +24,117 @@
 
 .selected {
   background-color: #ccc;
+}
+
+
+
+
+
+
+
+input[type='color'] {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type='color']::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+  
+
+
+}
+
+/*Settings*/
+
+#color-picker {
+  position: absolute;
+  top: 15%;
+  left: 26%;
+
+}
+
+#draw {
+  position: absolute;
+  top: 25%;
+  left: 26.05%;
+}
+
+#color-dropper {
+  position: absolute;
+  top: 29%;
+  left: 24.55%;
+}
+
+#eraser {
+  position: absolute;
+  top: 33%;
+  left: 25.8%;
+}
+
+#clear {
+  position: absolute;
+  top: 37%;
+  left: 26.1%;
+}
+
+#setting-1 {
+  position: absolute;
+  top: 41%;
+  left: 25.7%;
+}
+
+#setting-2 {
+  position: absolute;
+  top: 45%;
+  left: 25.7%;
+}
+
+#setting-3 {
+  position: absolute;
+  top: 49%;
+  left: 25.7%;
+}
+
+#setting-4 {
+  position: absolute;
+  top: 53%;
+  left: 25.2%;
+}
+
+#save-button {
+  position: absolute;
+  top: 64%;
+  left: 26.1%;
+}
+
+#white-button {
+  position: absolute;
+  top: 68%;
+  left: 26.9%;
+}
+
+#white {
+  position: absolute;
+  top: 68.1%;
+  left: 24.8%;
+  text-align: center;
+}
+
+#transparent-button {
+  position: absolute;
+  top: 77.5%;
+  left: 26.9%;
+}
+
+#transparent {
+  position: absolute;
+  top: 77.6%;
+  left: 24.8%;
+  text-align: center;
 }
