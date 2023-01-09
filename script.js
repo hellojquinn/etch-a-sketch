@@ -28,6 +28,10 @@ let colorPicker = document.getElementById('color-picker');
 
 colorPicker.addEventListener('change', function(event) {
   selectedColor = colorPicker.value;  
+  currentTool = 'draw';
+  drawButton.classList.add('selected');
+  eraseButton.classList.remove('selected');
+  colorDropperButton.classList.remove('selected');
 });
 
 drawButton.addEventListener('click', function() {
@@ -59,6 +63,14 @@ grid.addEventListener('mousedown', function(event) {
       event.target.style.backgroundColor = selectedColor;
     } else if (currentTool === 'erase') {
       event.target.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+    } else if (currentTool === 'color-dropper') {
+      if (event.target.matches('div')) {
+        const backgroundColor = event.target.style.backgroundColor;
+        if (backgroundColor) {
+          const hexColor = rgbToHex(backgroundColor);
+          colorPicker.value = hexColor;
+        }
+      }
     }
   }
 });
@@ -71,18 +83,6 @@ grid.addEventListener('mousemove', function(event) {
       } else if (currentTool === 'erase') {
         event.target.style.backgroundColor = 'rgba(0, 0, 0, 0)';
       } 
-    }
-  }
-});
-
-grid.addEventListener('mouseover', function(event) {
-  if (currentTool === 'color-dropper') {
-    if (event.target.matches('div')) {
-      const backgroundColor = event.target.style.backgroundColor;
-      if (backgroundColor) {
-        const hexColor = rgbToHex(backgroundColor);
-        colorPicker.value = hexColor;
-      }
     }
   }
 });
@@ -109,7 +109,11 @@ function rgbToHex(rgb) {
 
 function createGrid(rows = 16, columns = 16) {
   
-  grid.innerHTML = '';
+  grid.classList.remove('fade-in');
+
+  setTimeout(function() {
+    grid.innerHTML = '';
+  
 
   const squareSize = container.offsetWidth / columns;
 
@@ -129,6 +133,9 @@ function createGrid(rows = 16, columns = 16) {
   grid.style.gridTemplateRows = `repeat(${rows}, ${squareSize}px)`;
   grid.style.width = `${columns * squareSize}px`;
   grid.style.height = `${rows * squareSize}px`;
+
+  grid.classList.add('fade-in');
+  }, 500);
 }
 
 
@@ -256,8 +263,6 @@ document.getElementById('save-button').addEventListener('click', function() {
     link.click();
   });
 });
-
-
 
 
 drawButton.classList.add('selected');

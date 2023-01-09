@@ -16,25 +16,51 @@ body {
   display: grid;
   width: 100%;
   height: 100%;
+  cursor: crosshair;
+  transition: opacity 0.25s ease-out;
+  opacity: 0;
 }
 
+#grid.fade-in {
+  opacity: 1;
+}
+
+
 #heading {
-  text-align: center;
+  position: absolute;
+  top: 6%;
+  left: 25%;
+  font-family: "Lexend Deca";
+  color: #3A3B3C;
+}
+
+#dot {
+  color: #2c75ff;
 }
 
 .selected {
-  background-color: #ccc;
+  background-color: #e3e3e3;
+  border-color: #2c75ff !important;
 }
 
+/*Settings*/
 
+#color-picker {
+  position: absolute;
+  top: 15%;
+  left: 25%;
+  transition: all .2s ease-in-out;
+  cursor: pointer;
+}
 
-
-
-
+#color-picker:hover {
+  transform: scale(1.025);
+  transition: all .2s ease-in-out;
+}
 
 input[type='color'] {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   border: none;
   outline: none;
@@ -45,96 +71,286 @@ input[type='color'] {
 input[type='color']::-webkit-color-swatch {
   border: none;
   border-radius: 50%;
-  
-
-
-}
-
-/*Settings*/
-
-#color-picker {
-  position: absolute;
-  top: 15%;
-  left: 26%;
-
 }
 
 #draw {
   position: absolute;
-  top: 25%;
-  left: 26.05%;
+  top: 29%;
+  left: 25.75%;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  width: 65px;
+  height: 25px;
+  border-radius: 5px;
+  text-decoration: none;
+  border-style: solid;
+  border-color: #3A3B3C;
+  color: #3A3B3C;
+  font-family: "Lexend Deca";
+  
+}
+
+#draw:hover {
+  transform: scale(1.025);
+  transition: all .2s ease-in-out;
 }
 
 #color-dropper {
   position: absolute;
-  top: 29%;
+  top: 33.5%;
   left: 24.55%;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  width: 100px;
+  height: 25px;
+  border-radius: 5px;
+  text-decoration: none;
+  border-style: solid;
+  border-color: #3A3B3C;
+  color: #3A3B3C;
+  font-family: "Lexend Deca";
+}
+
+#color-dropper:hover {
+  transform: scale(1.025);
+  transition: all .2s ease-in-out;
 }
 
 #eraser {
   position: absolute;
-  top: 33%;
+  top: 38%;
   left: 25.8%;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  width: 65px;
+  height: 25px;
+  border-radius: 5px;
+  text-decoration: none;
+  border-style: solid;
+  border-color: #3A3B3C;
+  color: #3A3B3C;
+  font-family: "Lexend Deca";
+}
+
+#eraser:hover {
+  transform: scale(1.025);
+  transition: all .2s ease-in-out;
 }
 
 #clear {
   position: absolute;
-  top: 37%;
+  top: 42.5%;
   left: 26.1%;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  width: 55px;
+  height: 25px;
+  border-radius: 5px;
+  text-decoration: none;
+  border-style: solid;
+  border-color: #3A3B3C;
+  color: #3A3B3C;
+  font-family: "Lexend Deca";
+  animation: border-pulse 0.6s ease-out 0.2s;
+  animation-fill-mode: both;
 }
+
+#clear:active {
+  animation: none;
+}
+
+#clear:hover {
+  transform: scale(1.025);
+  transition: all .2s ease-in-out;
+}
+
+@keyframes border-pulse {
+  0% {
+    border-color: #2c75ff;
+  }
+  100% {
+    border-color: #3A3B3C;
+  }
+}
+
 
 #setting-1 {
   position: absolute;
-  top: 41%;
-  left: 25.7%;
+  top: 50%;
+  left: 26.1%;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  width: 55px;
+  height: 25px;
+  border-radius: 5px;
+  text-decoration: none;
+  border-style: solid;
+  border-color: #3A3B3C;
+  color: #3A3B3C;
+  font-family: "Lexend Deca";
+  animation: border-pulse 0.6s ease-out 0.2s;
+  animation-fill-mode: both;
+}
+
+#setting-1:active {
+  animation: none;
+}
+
+#setting-1:hover {
+  transform: scale(1.025);
+  transition: all .2s ease-in-out;
 }
 
 #setting-2 {
   position: absolute;
-  top: 45%;
+  top: 54.5%;
   left: 25.7%;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  width: 68px;
+  height: 25px;
+  border-radius: 5px;
+  text-decoration: none;
+  border-style: solid;
+  border-color: #3A3B3C;
+  color: #3A3B3C;
+  font-family: "Lexend Deca";
+  animation: border-pulse 0.6s ease-out 0.2s;
+  animation-fill-mode: both;
+}
+
+#setting-2:active {
+  animation: none;
+}
+
+#setting-2:hover {
+  transform: scale(1.025);
+  transition: all .2s ease-in-out;
 }
 
 #setting-3 {
   position: absolute;
-  top: 49%;
-  left: 25.7%;
+  top: 59%;
+  left: 25.96%;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  width: 60px;
+  height: 25px;
+  border-radius: 5px;
+  text-decoration: none;
+  border-style: solid;
+  border-color: #3A3B3C;
+  color: #3A3B3C;
+  font-family: "Lexend Deca";
+  animation: border-pulse 0.6s ease-out 0.2s;
+  animation-fill-mode: both;
+}
+
+#setting-3:active {
+  animation: none;
+}
+
+#setting-3:hover {
+  transform: scale(1.025);
+  transition: all .2s ease-in-out;
 }
 
 #setting-4 {
   position: absolute;
-  top: 53%;
-  left: 25.2%;
+  top: 63.5%;
+  left: 25.57%;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  width: 72px;
+  height: 25px;
+  border-radius: 5px;
+  text-decoration: none;
+  border-style: solid;
+  border-color: #3A3B3C;
+  color: #3A3B3C;
+  font-family: "Lexend Deca";
+  animation: border-pulse 0.6s ease-out 0.2s;
+  animation-fill-mode: both;
+}
+
+#setting-4:active {
+  animation: none;
+}
+
+#setting-4:hover {
+  transform: scale(1.025);
+  transition: all .2s ease-in-out;
 }
 
 #save-button {
   position: absolute;
-  top: 64%;
-  left: 26.1%;
+  top: 71%;
+  left: 25.9%;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  width: 58px;
+  height: 25px;
+  border-radius: 5px;
+  text-decoration: none;
+  border-style: solid;
+  border-color: #3A3B3C;
+  color: #3A3B3C;
+  font-family: "Lexend Deca";
+  animation: border-pulse 0.6s ease-out 0.2s;
+  animation-fill-mode: both;
+}
+
+#save-button:active {
+  animation: none;
+}
+
+#save-button:hover {
+  transform: scale(1.025);
+  transition: all .2s ease-in-out;
+}
+
+#background-type {
+  position: absolute;
+  top: 74%;
+  left: 25.5%;
+  text-align: center;
+  color: #3A3B3C;
+  font-family: "Lexend Deca";
+  font-size: 12px;
 }
 
 #white-button {
   position: absolute;
-  top: 68%;
-  left: 26.9%;
+  top: 79%;
+  left: 25.2%;
+  cursor: pointer;
+  accent-color: #2c75ff;
 }
 
 #white {
   position: absolute;
-  top: 68.1%;
-  left: 24.8%;
+  top: 78%;
+  left: 27%;
   text-align: center;
+  color: #3A3B3C;
+  font-family: "Lexend Deca";
+  font-size: 10px;
 }
 
 #transparent-button {
   position: absolute;
-  top: 77.5%;
-  left: 26.9%;
+  top: 83%;
+  left: 25.2%;
+  cursor: pointer;
+  accent-color: #2c75ff;
 }
 
 #transparent {
   position: absolute;
-  top: 77.6%;
-  left: 24.8%;
+  top: 82%;
+  left: 27%;
   text-align: center;
+  color: #3A3B3C;
+  font-family: "Lexend Deca";
+  font-size: 10px;
 }
