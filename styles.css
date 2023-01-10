@@ -331,7 +331,6 @@ input[type='color']::-webkit-color-swatch {
   position: absolute;
   top: 78%;
   left: 27%;
-  text-align: center;
   color: #3A3B3C;
   font-family: "Lexend Deca";
   font-size: 10px;
@@ -349,6 +348,15 @@ input[type='color']::-webkit-color-swatch {
   position: absolute;
   top: 82%;
   left: 27%;
+  color: #3A3B3C;
+  font-family: "Lexend Deca";
+  font-size: 10px;
+}
+
+#copy {
+  position: absolute;
+  top: 82%;
+  left: 42%;
   text-align: center;
   color: #3A3B3C;
   font-family: "Lexend Deca";
