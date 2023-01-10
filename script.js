@@ -1,31 +1,17 @@
 const container = document.getElementById('container');
 const grid = document.getElementById('grid');
 
-let currentTool = 'draw';
-
 const drawButton = document.querySelector('.tool-button[data-tool="draw"]');
 const eraseButton = document.querySelector('.tool-button[data-tool="erase"]');
-
 const colorDropperButton = document.querySelector('.tool-button[data-tool="color-dropper"]');
 
-
-
-drawButton.addEventListener('click', function() {
-  currentTool = 'draw';
-});
-
-eraseButton.addEventListener('click', function() {
-  currentTool = 'erase';
-});
-
+let currentTool = 'draw';
 
 let selectedColor = '#000000';
-
 let colorPicker = document.getElementById('color-picker');
 
 
-//buttons
-
+//Buttons within the GUI.
 colorPicker.addEventListener('change', function(event) {
   selectedColor = colorPicker.value;  
   currentTool = 'draw';
@@ -55,7 +41,16 @@ colorDropperButton.addEventListener('click', function() {
   colorDropperButton.classList.add('selected');
 });
 
+document.getElementById('clear').addEventListener('click', function() {
+  currentTool = 'draw';
+  drawButton.classList.add('selected');
+  eraseButton.classList.remove('selected');
+  colorDropperButton.classList.remove('selected');
+  createGrid(currentSetting.rows, currentSetting.cols);
+});
 
+
+//Mouse events to draw.
 grid.addEventListener('mousedown', function(event) {
   if (event.target.matches('div')) {
     if (currentTool === 'draw') {
@@ -87,6 +82,9 @@ grid.addEventListener('mousemove', function(event) {
   }
 });
 
+
+
+//Color picker uses RBG output. This function converts it to hexadecimal to allow its b/g color to be changed.
 function rgbToHex(rgb) {
   
   const r = parseInt(rgb.match(/\d+/g)[0], 10);
@@ -104,14 +102,13 @@ function rgbToHex(rgb) {
 
 
 
-
-
-
+//Create grid using div cells of 16x16.
 function createGrid(rows = 16, columns = 16) {
   
   grid.classList.remove('fade-in');
 
   setTimeout(function() {
+    //Clear existing grid.
     grid.innerHTML = '';
   
 
@@ -128,7 +125,6 @@ function createGrid(rows = 16, columns = 16) {
     }
   }
 
-  
   grid.style.gridTemplateColumns = `repeat(${columns}, ${squareSize}px)`;
   grid.style.gridTemplateRows = `repeat(${rows}, ${squareSize}px)`;
   grid.style.width = `${columns * squareSize}px`;
@@ -139,7 +135,7 @@ function createGrid(rows = 16, columns = 16) {
 }
 
 
-
+//Update grid size of rows/columns based on which case.
 let currentSetting;
 
 function updateGridSize(setting) {
@@ -170,14 +166,6 @@ function updateGridSize(setting) {
   }
 }
 
-document.getElementById('clear').addEventListener('click', function() {
-  currentTool = 'draw';
-  drawButton.classList.add('selected');
-  eraseButton.classList.remove('selected');
-  colorDropperButton.classList.remove('selected');
-  createGrid(currentSetting.rows, currentSetting.cols);
-});
-
 
 document.getElementById('setting-1').addEventListener('click', function() {
     updateGridSize('setting-1');
@@ -196,8 +184,7 @@ document.getElementById('setting-4').addEventListener('click', function() {
 });
 
 
-updateGridSize('setting-1');
-
+//Save functionality for both white and transparent background by converting the grid to canvas.
 const backgroundRadioButtons = document.querySelectorAll('input[name="background"]');
 
 let selectedBackground = 'white';
@@ -242,13 +229,10 @@ function saveImage(transparentBackground) {
 
   
   const a = document.createElement('a');
-  a.download = 'image.png';
+  a.download = 'pixelpad.png';
   a.href = dataURL;
   a.click();
 }
-
-
-
 
 document.getElementById('save-button').addEventListener('click', function() {
   const radioValue = document.querySelector('input[name="background"]:checked').value;
@@ -258,12 +242,13 @@ document.getElementById('save-button').addEventListener('click', function() {
     backgroundColor: backgroundColor,
   }).then(canvas => {
     const link = document.createElement('a');
-    link.download = 'my-image.png';
+    link.download = 'pixelpad.png';
     link.href = canvas.toDataURL();
     link.click();
   });
 });
 
-
+//Default settings on page load.
 drawButton.classList.add('selected');
+updateGridSize('setting-1');
 
